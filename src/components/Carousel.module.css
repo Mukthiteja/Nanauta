@@ -1,0 +1,14 @@
+.carousel-item img {
+    height: 30vh; /* Adjust this value to reduce the height */
+    object-fit: contain;
+  }
+  
+  .carousel-container {
+    max-width: 100%;
+    max-height: 200Px;
+  }
+  
+  .carousel-indicators button {
+    background-color: rgb(187, 20, 20); /* Change this color as needed */
+  }
+  

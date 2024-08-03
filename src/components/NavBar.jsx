@@ -1,8 +1,8 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
-import logo from '../assets/logo.png'; 
-import './NavBar.module.css';
+import logo from '/logo.png'; 
+import styles from './NavBar.module.css'; // Import the CSS module
 
 export default function NavBar() {
   return (
@@ -10,9 +10,7 @@ export default function NavBar() {
       <nav className="navbar navbar-expand-lg navbar-dark bg-success">
         <div className="container-fluid">
           <Link className="navbar-brand fs-italic" to="#">
-            {/*<img className="navbar-brand img"src={logo} alt="Nanauta" />
-            */}
-            Nanauta
+            <img className={`${styles['navbar-brand']} ${styles['img']}`} style={{"height":"60px"}} src={logo} alt="Nanauta" />
           </Link>
           <button
             className="navbar-toggler"

@@ -1,40 +1,34 @@
-import express from "express";
-import mongoose from "mongoose";
-import dotenv from "dotenv";
+import express from 'express';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import cors from 'cors';  // Import the CORS middleware
 
-const app = express(); // Express instance
-dotenv.config(); // Load env
+const app = express();
+dotenv.config();
 
-const PORT = process.env.PORT || 7000; // 7000 is alt port
+const PORT = process.env.PORT || 7000;
 const MONGOURL = process.env.MONGO_URL;
 
-// Define the schema for the foodCategory collection
-const foodCategorySchema = new mongoose.Schema({
-  // Define the fields and their types here
-  CategoryName: String,
-});
-
-// Create the model for the foodCategory collection
-const foodCategory = mongoose.model('foodCategory', foodCategorySchema);
-
-// Connect the express app with MongoDB using Mongoose
 mongoose.connect(MONGOURL)
-  /*.then(() => {
+  .then(async () => {
     console.log("Database connected successfully");
+
+    // Use the CORS middleware with specific settings
+    app.use(cors({
+      origin: 'http://localhost:5173',  // Allow requests from this origin
+      methods: ['GET', 'POST'],         // Allow these HTTP methods
+      allowedHeaders: ['Content-Type']  // Allow these headers
+    }));
+
+    app.use(express.json());
+
+    const createUserRoutes = await import('./Routes/CreateUser.js');  // Correct path and file name
+    app.use('/api', createUserRoutes.default);
 
     app.listen(PORT, () => {
       console.log(`Server is running on Port ${PORT}`);
     });
-
-    // Fetch data from the foodCategory collection
-    foodCategory.find({})
-      .then(fetched_data => {
-       // console.log(fetched_data);
-      })
-      .catch(err => {
-        console.error(err);
-      });
-  })*/
+  })
   .catch((err) => {
     console.error("Database connection error:", err);
   });
